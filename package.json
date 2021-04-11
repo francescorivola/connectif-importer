@@ -9,6 +9,15 @@
     "lint-fix": "npx standard --fix",
     "lint": "npx standard"
   },
+  "keywords": [
+    "cli",
+    "connectif",
+    "import",
+    "products",
+    "contacts",
+    "marketing",
+    "csv"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/francescorivola/connectif-importer.git"
