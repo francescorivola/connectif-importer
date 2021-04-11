@@ -30,5 +30,8 @@
     "nock": "^13.0.11",
     "standard": "^16.0.3",
     "tap": "^15.0.2"
+  },
+  "bin": {
+    "connectif-importer": "./src/index.js"
   }
 }
