@@ -1,6 +1,6 @@
 {
   "name": "connectif-importer",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Command line interface to perform contacts or products imports in Connectif Marketing Automation Platform.",
   "main": "src/index.js",
   "scripts": {
