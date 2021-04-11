@@ -68,6 +68,7 @@ async function executeImport (options) {
       console.log(`error ${type} imported`, errors)
       return
     } else if (status === 'error') {
+      progressBar.stop()
       throw new Error('import finished in error state')
     }
     await wait(interval)
