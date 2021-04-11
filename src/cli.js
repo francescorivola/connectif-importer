@@ -4,7 +4,7 @@ const FormData = require('form-data')
 const { Command } = require('commander')
 const cliProgress = require('cli-progress')
 const colors = require('colors')
-const packageInfo = require('../package.json');
+const packageInfo = require('../package.json')
 
 async function executeImport (options) {
   const {
