@@ -1,3 +1,5 @@
+'use strict'
+
 const fetch = require('node-fetch')
 const fs = require('fs')
 const FormData = require('form-data')
