@@ -6,6 +6,7 @@
   "scripts": {
     "test": "tap \"test/**/*.test.js\"",
     "test-ci": "tap \"test/**/*.test.js\" --100",
+    "post-test": "tap --coverage-report=lcov",
     "lint-fix": "npx standard --fix",
     "lint": "npx standard"
   },
