@@ -26,7 +26,6 @@ jobs:
         CI: true
 
     - name: Publish Code Coverage
-      if: github.ref == 'refs/heads/main'
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
