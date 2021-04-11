@@ -128,3 +128,19 @@ t.test('cli should throw error if got an api response error while checking impor
     t.equal(getScope.isDone(), true)
   }
 })
+
+t.test('cli should throw error if file does not exists', async t => {
+  try {
+    await cli().parseAsync([
+      'node',
+      'src/index.js',
+      '-a', 'myApiKey',
+      '-t', 'contacts',
+      '-f', './test/file-that-does-not-exists.csv',
+      '-i', '1'
+    ])
+    t.fail('should not execute this')
+  } catch (error) {
+    t.equal(error.message, 'file ./test/file-that-does-not-exists.csv does not exist')
+  }
+})

@@ -19,6 +19,10 @@ async function executeImport (options) {
     apiKey
   } = options
 
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`file ${filePath} does not exist`)
+  }
+
   const form = new FormData()
   form.setBoundary('--------------------------515890814546601021194782')
   form.append('type', type)
