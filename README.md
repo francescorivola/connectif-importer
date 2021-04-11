@@ -57,7 +57,7 @@ docker run --rm francescorivola/connectif-importer:latest
 
 The below will run the CLI with the given options:
 ```
-docker run --rm -v file.csv:/home/node/file.csv francescorivola/connectif-importer:latest \
+docker run --rm -v $(pwd)/file.csv:/home/node/file.csv francescorivola/connectif-importer:latest \
   --filePath=file.csv \
   --type=contacts \
   --apiKey=$CONNECTIF_API_KEY
