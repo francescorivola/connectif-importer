@@ -5,6 +5,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/francescorivola/connectif-importer/badge)](https://www.codefactor.io/repository/github/francescorivola/connectif-importer)
 [![codecov](https://codecov.io/gh/francescorivola/connectif-importer/branch/main/graph/badge.svg)](https://codecov.io/gh/francescorivola/connectif-importer)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=francescorivola/connectif-importer)](https://dependabot.com)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Docker Pulls](https://img.shields.io/docker/pulls/francescorivola/connectif-importer.svg)](https://hub.docker.com/r/francescorivola/connectif-importer)
 
 A CLI to import your contacts and/or products to [Connectif Marketing Automation Platform](https://www.connectif.ai).
