@@ -4,6 +4,7 @@ const FormData = require('form-data')
 const { Command } = require('commander')
 const cliProgress = require('cli-progress')
 const colors = require('colors')
+const packageInfo = require('../package.json');
 
 async function executeImport (options) {
   const {
@@ -77,6 +78,9 @@ function wait (ms) {
 
 module.exports = function cli () {
   return new Command()
+    .version(packageInfo.version)
+    .name(packageInfo.name)
+    .description(packageInfo.description)
     .requiredOption('-a, --apiKey <apiKey>', 'api key')
     .requiredOption('-d, --delimiter <delimiter>', 'csv delimiter', ',')
     .requiredOption('-t, --type <type>', 'import type (contacts or products)')
