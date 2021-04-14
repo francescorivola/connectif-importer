@@ -23,6 +23,8 @@ async function executeImport (options) {
     throw new Error(`file ${filePath} does not exist`)
   }
 
+  console.log('[info] uploading file and submitting import request.')
+
   const form = new FormData()
   form.setBoundary('--------------------------515890814546601021194782')
   form.append('type', type)
@@ -46,7 +48,7 @@ async function executeImport (options) {
 
   const { id, total } = await response.json()
 
-  console.log(`import request successfully submitted with id ${id}\n`.green)
+  console.log(`[info] import request successfully submitted with id ${id}. Now waiting for import completion.\n`)
 
   const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_grey)
   progressBar.start(total, 0)
@@ -61,15 +63,16 @@ async function executeImport (options) {
     if (!getResponse.ok) {
       throw new Error(`${getResponse.status} - ${await getResponse.text()}`)
     }
-    const { success, errors, status } = await getResponse.json()
+    const { success, errors, status, errorReportFileUrl } = await getResponse.json()
     progressBar.update(success + errors)
 
     if (status === 'finished') {
       progressBar.stop()
-      console.log(colors.green('\nSuccess 🎉 🎉 🎉 🎉 🎉 🎉 🎉'))
-      console.log(`total ${type} to import`, total)
-      console.log(`success ${type} imported`, success)
-      console.log(`error ${type} imported`, errors)
+      console.log(colors.green('\n[info] import finished 🎉 🎉 🎉 🎉 🎉 🎉 🎉.'))
+      console.log(`[info] ${success} of ${total} ${type} have been imported successfully.`)
+      if (errors > 0) {
+        console.log(colors.yellow(`[warn] ${errors} lines in the csv have validation errors. Check out more info downloading the error report at ${errorReportFileUrl}`))
+      }
       return
     } else if (status === 'error') {
       progressBar.stop()
