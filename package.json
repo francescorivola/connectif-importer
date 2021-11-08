@@ -34,7 +34,7 @@
     "colors": "^1.4.0",
     "commander": "^8.0.0",
     "form-data": "^4.0.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^3.1.0"
   },
   "devDependencies": {
     "nock": "^13.0.11",
