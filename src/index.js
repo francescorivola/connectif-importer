@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-'use strict'
+import cli from './cli.js'
 
-const cli = require('./cli')
-
-cli().parseAsync(process.argv).catch(error => {
-  console.error('[error]'.red, error.message.red)
-  process.exit(1)
-})
+cli()
+  .parseAsync(process.argv)
+  .catch(error => {
+    console.error('[error]'.red, error.message.red)
+    process.exit(1)
+  })

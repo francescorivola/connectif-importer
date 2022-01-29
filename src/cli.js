@@ -1,11 +1,13 @@
-'use strict'
+import fetch from 'node-fetch'
+import fs from 'fs'
+import FormData from 'form-data'
+import { Command } from 'commander'
+import cliProgress from 'cli-progress'
+import colors from 'colors'
+import { readFile } from 'fs/promises'
+import { createRequire } from 'module'
 
-const fetch = require('node-fetch')
-const fs = require('fs')
-const FormData = require('form-data')
-const { Command } = require('commander')
-const cliProgress = require('cli-progress')
-const colors = require('colors')
+const require = createRequire(import.meta.url)
 const packageInfo = require('../package.json')
 
 async function executeImport (options) {
@@ -48,30 +50,51 @@ async function executeImport (options) {
 
   const { id, total } = await response.json()
 
-  console.log(`[info] import request successfully submitted with id ${id}. Now waiting for import completion.\n`)
+  console.log(
+    `[info] import request successfully submitted with id ${id}. Now waiting for import completion.\n`
+  )
 
-  const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_grey)
+  const progressBar = new cliProgress.SingleBar(
+    {},
+    cliProgress.Presets.shades_grey
+  )
   progressBar.start(total, 0)
 
   while (true) {
-    const getResponse = await fetch(`https://api.connectif.cloud/imports/${id}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `apiKey ${apiKey}`
+    const getResponse = await fetch(
+      `https://api.connectif.cloud/imports/${id}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `apiKey ${apiKey}`
+        }
       }
-    })
+    )
     if (!getResponse.ok) {
       throw new Error(`${getResponse.status} - ${await getResponse.text()}`)
     }
-    const { success, errors, status, errorReportFileUrl } = await getResponse.json()
+    const {
+      success,
+      errors,
+      status,
+      errorReportFileUrl
+    } = await getResponse.json()
     progressBar.update(success + errors)
 
     if (status === 'finished') {
       progressBar.stop()
-      console.log(colors.green('\n[info] import finished 🎉 🎉 🎉 🎉 🎉 🎉 🎉.'))
-      console.log(`[info] ${success} of ${total} ${type} have been imported successfully.`)
+      console.log(
+        colors.green('\n[info] import finished 🎉 🎉 🎉 🎉 🎉 🎉 🎉.')
+      )
+      console.log(
+        `[info] ${success} of ${total} ${type} have been imported successfully.`
+      )
       if (errors > 0) {
-        console.log(colors.yellow(`[warn] ${errors} lines in the csv have validation errors. Check out more info downloading the error report at ${errorReportFileUrl}`))
+        console.log(
+          colors.yellow(
+            `[warn] ${errors} lines in the csv have validation errors. Check out more info downloading the error report at ${errorReportFileUrl}`
+          )
+        )
       }
       return
     } else if (status === 'error') {
@@ -86,7 +109,7 @@ function wait (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-module.exports = function cli () {
+export default function cli () {
   return new Command()
     .version(packageInfo.version)
     .name(packageInfo.name)
@@ -94,9 +117,21 @@ module.exports = function cli () {
     .requiredOption('-a, --apiKey <apiKey>', 'api key')
     .requiredOption('-d, --delimiter <delimiter>', 'csv delimiter', ',')
     .requiredOption('-t, --type <type>', 'import type (contacts or products)')
-    .requiredOption('-u, --updateOnlyEmptyFields', 'update only existing fields', false)
-    .requiredOption('-o, --overrideExisting', 'override contacts if existing', true)
+    .requiredOption(
+      '-u, --updateOnlyEmptyFields',
+      'update only existing fields',
+      false
+    )
+    .requiredOption(
+      '-o, --overrideExisting',
+      'override contacts if existing',
+      true
+    )
     .requiredOption('-f, --filePath <filePath>', 'csv file path')
-    .requiredOption('-i, --interval <interval>', 'interval in milliseconds to check for import progress', 2000)
+    .requiredOption(
+      '-i, --interval <interval>',
+      'interval in milliseconds to check for import progress',
+      2000
+    )
     .action(executeImport)
 }
