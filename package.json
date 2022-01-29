@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "Command line interface to easily imports contacts or products csv file in Connectif Marketing Automation Platform.",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "test": "tap \"test/**/*.test.js\"",
     "test-ci": "tap \"test/**/*.test.js\" --100",
@@ -34,7 +35,7 @@
     "colors": "^1.4.0",
     "commander": "^8.0.0",
     "form-data": "^4.0.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^3.2.0"
   },
   "devDependencies": {
     "nock": "^13.0.11",
