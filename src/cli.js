@@ -4,7 +4,6 @@ import FormData from 'form-data'
 import { Command } from 'commander'
 import cliProgress from 'cli-progress'
 import colors from 'colors'
-import { readFile } from 'fs/promises'
 import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
