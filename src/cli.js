@@ -17,6 +17,7 @@ async function executeImport (options) {
     interval,
     delimiter,
     updateOnlyEmptyFields,
+    couponSetId,
     apiKey
   } = options
 
@@ -32,6 +33,9 @@ async function executeImport (options) {
   form.append('delimiter', delimiter)
   form.append('overrideExisting', `${overrideExisting}`)
   form.append('updateOnlyEmptyFields', `${updateOnlyEmptyFields}`)
+  if (couponSetId) {
+    form.append('couponSetId', `${couponSetId}`)
+  }
   form.append('file', fs.createReadStream(filePath))
 
   const response = await fetch('https://api.connectif.cloud/imports', {
@@ -72,12 +76,8 @@ async function executeImport (options) {
     if (!getResponse.ok) {
       throw new Error(`${getResponse.status} - ${await getResponse.text()}`)
     }
-    const {
-      success,
-      errors,
-      status,
-      errorReportFileUrl
-    } = await getResponse.json()
+    const { success, errors, status, errorReportFileUrl } =
+      await getResponse.json()
     progressBar.update(success + errors)
 
     if (status === 'finished') {
@@ -105,7 +105,7 @@ async function executeImport (options) {
 }
 
 function wait (ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 export default function cli () {
@@ -115,7 +115,10 @@ export default function cli () {
     .description(packageInfo.description)
     .requiredOption('-a, --apiKey <apiKey>', 'api key')
     .requiredOption('-d, --delimiter <delimiter>', 'csv delimiter', ',')
-    .requiredOption('-t, --type <type>', 'import type (contacts or products)')
+    .requiredOption(
+      '-t, --type <type>',
+      'import type (contacts, products or coupons)'
+    )
     .requiredOption(
       '-u, --updateOnlyEmptyFields',
       'update only existing fields',
@@ -125,6 +128,11 @@ export default function cli () {
       '-o, --overrideExisting',
       'override contacts if existing',
       true
+    )
+    .requiredOption(
+      '-c, --couponSetId <couponSetId>',
+      'coupon set identifier to import coupons into. Required when import type is coupons',
+      ''
     )
     .requiredOption('-f, --filePath <filePath>', 'csv file path')
     .requiredOption(
