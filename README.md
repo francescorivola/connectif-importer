@@ -36,15 +36,16 @@ Usage: connectif-importer [options]
 Command line interface to easily imports contacts or products csv file in Connectif Marketing Automation Platform.
 
 Options:
-  -V, --version                output the version number
-  -a, --apiKey <apiKey>        api key
-  -d, --delimiter <delimiter>  csv delimiter (default: ",")
-  -t, --type <type>            import type (contacts or products)
-  -u, --updateOnlyEmptyFields  update only existing fields (default: false)
-  -o, --overrideExisting       override contacts if existing (default: true)
-  -f, --filePath <filePath>    csv file path
-  -i, --interval <interval>    interval in milliseconds to check for import progress (default: 2000)
-  -h, --help                   display help for command
+  -V, --version                    output the version number
+  -a, --apiKey <apiKey>            api key
+  -d, --delimiter <delimiter>      csv delimiter (default: ",")
+  -t, --type <type>                import type (contacts, products or coupons)
+  -u, --updateOnlyEmptyFields      update only existing fields (default: false)
+  -o, --overrideExisting           override contacts if existing (default: true)
+  -c, --couponSetId <couponSetId>  coupon set identifier to import coupons into. Required when import type is coupons (default: "")
+  -f, --filePath <filePath>        csv file path
+  -i, --interval <interval>        interval in milliseconds to check for import progress (default: 2000)
+  -h, --help                       display help for command
 ```
 
 ## Docker
@@ -52,11 +53,13 @@ Options:
 In case you want to run the CLI using docker you can with the following commands:
 
 The below will print the version of the CLI:
+
 ```
 docker run --rm francescorivola/connectif-importer:latest
 ```
 
 The below will run the CLI with the given options:
+
 ```
 docker run --rm -v $(pwd)/file.csv:/home/node/file.csv francescorivola/connectif-importer:latest \
   --filePath=file.csv \
