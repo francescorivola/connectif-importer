@@ -38,11 +38,19 @@
     "node-fetch": "^3.2.0"
   },
   "devDependencies": {
+    "@istanbuljs/esm-loader-hook": "^0.1.2",
     "nock": "^13.0.11",
     "standard": "^16.0.3",
     "tap": "^15.0.2"
   },
   "bin": {
     "connectif-importer": "src/index.js"
+  },
+  "tap": {
+    "node-arg": [
+      "--no-warnings",
+      "--experimental-loader",
+      "@istanbuljs/esm-loader-hook"
+    ]
   }
 }
