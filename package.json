@@ -41,7 +41,7 @@
     "@istanbuljs/esm-loader-hook": "^0.1.2",
     "nock": "^13.0.11",
     "standard": "^16.0.3",
-    "tap": "^15.0.2"
+    "tap": "^16.0.0"
   },
   "bin": {
     "connectif-importer": "src/index.js"
